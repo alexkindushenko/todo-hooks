@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 100%;
+}
+
+.todo-app {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.app-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0 1rem;
+}
+
+.app-header p {
+  font-size: 1.5rem;
+}
+
+ul {
+  list-style: none;
+}
+
+.todo-item {
+  display: flex;
+  padding: 1rem;
+  font-size: 2rem;
+  margin: 2px;
+  border-radius: 2.5rem;
+  border: 1px solid rgb(0, 0, 0);
+}
+
+li {
+  overflow: hidden;
+  width: 83%;
+}
+
+li.done {
+  text-decoration-line: line-through;
+  color: rgba(0, 0, 0, 0.253);
+}
+
+li.in-progres {
+  color: rgb(255, 0, 0);
+}
+
+.todo-item button {
+  float: right;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  margin-left: 1em;
+}
+
+.add-todo {
+  display: flex;
+  height: 2.5rem;
+  justify-content: space-between;
+  padding: 1rem;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 2.5rem;
+}
+
+.add-todo button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}
+
+.add-todo input {
+  padding-left: 1rem;
+  border-radius: 1.5rem;
+  width: 86%;
+  font-size: 1.4rem;
+}
+
+.search {
+  display: flex;
+  height: 2.5rem;
+  justify-content: space-between;
+  padding: 1rem;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 2.5rem;
+}
+
+.search input {
+  padding-left: 1rem;
+  border-radius: 1.5rem;
+  width: 67%;
+  font-size: 1.4rem;
+}
+
+.search button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  margin-left: 1em;
+}
