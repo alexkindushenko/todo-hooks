@@ -1,29 +1,25 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useContext } from 'react';
 
-// import TodoContext from '../helpers/todo-context';
+import TodoContext from '../helpers/todo-context';
 
-const AddTodo = ({ handleAdd }) => {
+const AddTodo = () => {
   const [value, setValue] = useState('');
+  const { dispatch } = useContext(TodoContext);
 
   const onHandleAdd = (value) => {
-    if (value.trim()) handleAdd(value);
+    dispatch({ type: 'addTodo', payload: value });
 
     setValue('');
   };
 
   return (
-    <div className="add-todo">
+    <form className="add-todo">
       <input onChange={(e) => setValue(() => e.target.value)} value={value} />
-      <button disabled={!value.trim()} onClick={() => onHandleAdd(value)}>
+      <button type="submit" disabled={!value.trim()} onClick={() => onHandleAdd(value)}>
         Add
       </button>
-    </div>
+    </form>
   );
-};
-
-AddTodo.propTypes = {
-  handleAdd: PropTypes.func.isRequired,
 };
 
 export default AddTodo;

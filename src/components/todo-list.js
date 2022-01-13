@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 
 import TodoContext from '../helpers/todo-context';
 import TodoItem from './todo-item';
 
-const TodoList = ({ onDone, onInProgres, onDelete }) => {
-  const state = useContext(TodoContext);
+const TodoList = () => {
+  const { state, dispatch } = useContext(TodoContext);
   if (state.visibleTodos) {
     return (
       <ul>
@@ -15,9 +14,9 @@ const TodoList = ({ onDone, onInProgres, onDelete }) => {
             key={el.id}
             done={el.done}
             inProgres={el.inProgres}
-            onLabelClick={() => onDone(el.id)}
-            onInProgres={() => onInProgres(el.id)}
-            onDelete={() => onDelete(el.id)}
+            onDone={() => dispatch({ type: 'onDone', payload: el.id })}
+            onInProgres={() => dispatch({ type: 'onInProgres', payload: el.id })}
+            onDelete={() => dispatch({ type: 'onDelete', payload: el.id })}
           />
         ))}
       </ul>
@@ -25,12 +24,6 @@ const TodoList = ({ onDone, onInProgres, onDelete }) => {
   } else {
     <p>Loading...</p>;
   }
-};
-
-TodoList.propTypes = {
-  onDone: PropTypes.func.isRequired,
-  onInProgres: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
 };
 
 export default TodoList;

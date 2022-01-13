@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import TodoContext from '../helpers/todo-context';
 
 const AppHeader = () => {
-  const { todos } = useContext(TodoContext);
+  const { todos } = useContext(TodoContext).state;
   const done = todos.filter((el) => (el.done ? el : null)).length;
   return (
     <div className="app-header">

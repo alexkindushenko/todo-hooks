@@ -13,21 +13,14 @@ const App = () => {
 
   return (
     <div className="todo-app">
-      <TodoContext.Provider value={state}>
+      <TodoContext.Provider value={{ state, dispatch }}>
         <AppHeader />
 
-        <Search
-          onSearch={(str) => dispatch({ type: 'onSerarch', payload: str })}
-          onFilter={(filter) => dispatch({ type: 'onFilter', payload: filter })}
-        />
+        <Search />
 
-        <TodoList
-          onDone={(id) => dispatch({ type: 'onDone', payload: id })}
-          onDelete={(id) => dispatch({ type: 'onDelete', payload: id })}
-          onInProgres={(id) => dispatch({ type: 'onInProgres', payload: id })}
-        />
+        <TodoList />
 
-        <AddTodo handleAdd={(label) => dispatch({ type: 'addTodo', payload: label })} />
+        <AddTodo />
       </TodoContext.Provider>
     </div>
   );

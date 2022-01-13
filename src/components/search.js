@@ -1,22 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 
-const Search = ({ onSearch, onFilter }) => {
+import TodoContext from '../helpers/todo-context';
+
+const Search = () => {
+  const { dispatch } = useContext(TodoContext);
+
   return (
     <div className="search">
-      <input onChange={(e) => onSearch(e.target.value)} />
+      <input onChange={(e) => dispatch({ type: 'onSerarch', payload: e.target.value })} />
       <div>
-        <button onClick={() => onFilter('all')}>ALL</button>
-        <button onClick={() => onFilter('inp')}>INP</button>
-        <button onClick={() => onFilter('end')}>END</button>
+        <button onClick={() => dispatch({ type: 'onFilter', payload: 'all' })}>ALL</button>
+        <button onClick={() => dispatch({ type: 'onFilter', payload: 'inp' })}>INP</button>
+        <button onClick={() => dispatch({ type: 'onFilter', payload: 'end' })}>END</button>
       </div>
     </div>
   );
-};
-
-Search.propTypes = {
-  onSearch: PropTypes.func.isRequired,
-  onFilter: PropTypes.func.isRequired,
 };
 
 export default Search;
