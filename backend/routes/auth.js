@@ -26,7 +26,11 @@ router.post('/register', async (req, res) => {
       });
 
       user.save();
-      res.status(201).end();
+      req.session.user = user;
+      req.session.isAuthenticated = true;
+      req.session.save((err) => {
+        err ? res.status(500).json({ message: 'Server error!' }) : res.status(201).end();
+      });
     }
   } catch (error) {
     console.log(error);
@@ -39,9 +43,16 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const candidate = await UserSchema.findOne({ email });
     if (candidate) {
-      (await bcript.compare(password, candidate.password))
-        ? res.end()
-        : res.status(400).json({ message: 'Incorrect data. Check the data entered.' });
+      if (await bcript.compare(password, candidate.password)) {
+        req.session.user = candidate;
+        req.session.isAuthenticated = true;
+
+        req.session.save((err) => {
+          err ? res.status(500).json({ message: 'Server error!' }) : res.end();
+        });
+      } else {
+        res.status(400).json({ message: 'Incorrect data. Check the data entered.' });
+      }
     } else {
       res.status(400).json({ message: 'Incorrect data. Check the data entered.' });
     }
