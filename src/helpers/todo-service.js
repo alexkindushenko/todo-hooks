@@ -1,8 +1,10 @@
+import axios from 'axios';
+
 const _apiBase = 'http://localhost:8888/';
 
 export const getTodoList = async () => {
   try {
-    return await fetch.patch(_apiBase);
+    return await axios.patch(_apiBase);
   } catch (error) {
     return error;
   }
@@ -10,7 +12,7 @@ export const getTodoList = async () => {
 
 export const sendLoginForm = async (data) => {
   try {
-    return await fetch.post(`${_apiBase}login`, data);
+    return await axios.post(`${_apiBase}auth/login`, data);
   } catch (error) {
     console.log(error);
     return error;
@@ -19,23 +21,23 @@ export const sendLoginForm = async (data) => {
 
 export const sendRegisterForm = async (data) => {
   try {
-    return await fetch.post(`${_apiBase}register`, data);
+    return await axios.post(`${_apiBase}auth/register`, data);
   } catch (error) {
     return error;
   }
 };
 
-export const updateItem = async (data) => {
+export const updateItem = async (id, data) => {
   try {
-    return await fetch.put(`${_apiBase}`, data);
+    return await axios.put(`${_apiBase}${id}`, data);
   } catch (error) {
     return error;
   }
 };
 
-export const deleteItem = async (data) => {
+export const deleteItem = async (id) => {
   try {
-    return await fetch.delete(`${_apiBase}`, { params: data });
+    return await axios.delete(`${_apiBase}${id}`);
   } catch (error) {
     return error;
   }
@@ -43,14 +45,14 @@ export const deleteItem = async (data) => {
 
 export const addItem = async (data) => {
   try {
-    return await fetch.post(`${_apiBase}`, data);
+    return await axios.post(`${_apiBase}`, data);
   } catch (error) {
     return error;
   }
 };
 export const userLogout = async () => {
   try {
-    return await fetch.patch(`${_apiBase}logout`);
+    return await axios.patch(`${_apiBase}auth/logout`);
   } catch (error) {
     return error;
   }

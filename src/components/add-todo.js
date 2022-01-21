@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 
+import { addItem } from '../helpers/todo-service';
 import TodoContext from '../helpers/todo-context';
 
 const AddTodo = () => {
@@ -7,7 +8,7 @@ const AddTodo = () => {
   const { dispatch } = useContext(TodoContext);
 
   const onHandleAdd = (value) => {
-    dispatch({ type: 'addTodo', payload: value });
+    addItem({ label: value }).then(({ data }) => dispatch({ type: 'addTodo', payload: data }));
 
     setValue('');
   };

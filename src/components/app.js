@@ -1,27 +1,23 @@
-import React, { useReducer } from 'react';
+import React, { useContext, useEffect } from 'react';
 
+import TodoApp from '../screens/todo-app';
+import Auth from '../screens/auth';
 import TodoContext from '../helpers/todo-context';
-import TodoList from './todo-list';
-import AddTodo from './add-todo';
-import Search from './search';
-import initialState from '../helpers/state';
-import reducer from '../helpers/reducer';
-import AppHeader from './app-header';
+import { getTodoList } from '../helpers/todo-service';
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const { state, dispatch } = useContext(TodoContext);
+  const { isLoading, isAuth, isError } = state;
 
+  useEffect(() => {
+    getTodoList()
+      .then(({ data }) => dispatch({ type: 'fetchTodos', payload: data.todos }))
+      .catch(() => dispatch({ type: 'fetchTodosError' }));
+  }, []);
+  if (isError) return <h2>Error fetching data.</h2>;
   return (
     <div className="todo-app">
-      <TodoContext.Provider value={{ state, dispatch }}>
-        <AppHeader />
-
-        <Search />
-
-        <TodoList />
-
-        <AddTodo />
-      </TodoContext.Provider>
+      {isLoading ? <h2>Loading...</h2> : isAuth ? <TodoApp /> : <Auth />}
     </div>
   );
 };

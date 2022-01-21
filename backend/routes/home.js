@@ -1,4 +1,5 @@
-const { Router } = require('express');
+const { Router, response } = require('express');
+const { Types } = require('mongoose');
 
 const UserSchema = require('../models/user');
 
@@ -6,7 +7,7 @@ const router = Router();
 
 router.patch('/', (req, res) => {
   if (!req.session.isAuthenticated) {
-    res.json({ isAuth: false });
+    response.status(400);
   } else {
     res.json({
       todos: req.session.user.todos,
@@ -19,11 +20,12 @@ router.post('/', async (req, res) => {
   const user = await UserSchema.findById(req.session.user._id);
   const todo = {
     label: req.body.label,
+    _id: Types.ObjectId(),
   };
 
   user.todos = [...user.todos, todo];
   await user.save();
-  res.status(201).end();
+  res.status(201).json({ _id: todo._id, label: todo.label });
 });
 
 router.put('/:id', async (req, res) => {

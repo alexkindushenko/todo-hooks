@@ -102,3 +102,30 @@ li.in-progres {
   border-radius: 50%;
   margin-left: 1em;
 }
+
+.auth button {
+  text-align: center;
+  font-size: medium;
+  width: 50%;
+  height: 2rem;
+  border-radius: 1rem;
+}
+
+.auth button:hover {
+  background-color: rgb(119, 119, 119);
+}
+
+.auth input {
+  width: 47%;
+  height: 1rem;
+  padding: 0.5rem;
+  border-radius: 1rem;
+}
+
+.register input,
+.register button,
+.login button,
+.login input {
+  display: block;
+  margin: 1rem auto;
+}

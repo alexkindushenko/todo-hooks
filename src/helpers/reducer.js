@@ -1,7 +1,21 @@
-import { onSearch, onFilter, addTodo, onDone, onInProgres, onDelete } from './actions';
+import { onSearch, onFilter, addTodo, onDone, onInProgres, onDelete, fetchTodos } from './actions';
 
 function reducer(state, action) {
   switch (action.type) {
+    case 'fetchTodosError':
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    case 'fetchTodos':
+      return {
+        ...state,
+        todos: fetchTodos(action.payload),
+        visibleTodos: fetchTodos(action.payload),
+        isLoading: false,
+        isAuth: true,
+      };
     case 'onSerarch':
       return {
         ...state,

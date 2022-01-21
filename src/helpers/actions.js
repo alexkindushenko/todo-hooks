@@ -14,26 +14,30 @@ export const onFilter = (state, filter) => {
   return state.todos;
 };
 
-export const addTodo = (state, label) => {
+export const addTodo = (state, { _id, label }) => {
   return [
     ...state.todos,
     {
       label,
       inProgres: false,
       done: false,
-      id: Date.now(),
+      _id,
     },
   ];
 };
 
 export const onDone = (state, id) => {
-  return state.todos.map((el) => (el.id === id ? { ...el, done: !el.done, inProgres: false } : el));
+  return state.todos.map((el) =>
+    el._id === id ? { ...el, done: !el.done, inProgres: false } : el
+  );
 };
 
 export const onInProgres = (state, id) => {
-  return state.todos.map((el) => (el.id === id ? { ...el, inProgres: !el.inProgres } : el));
+  return state.todos.map((el) => (el._id === id ? { ...el, inProgres: !el.inProgres } : el));
 };
 
 export const onDelete = (state, id) => {
-  return state.todos.filter((el) => el.id !== id);
+  return state.todos.filter((el) => el._id !== id);
 };
+
+export const fetchTodos = (todos) => todos;

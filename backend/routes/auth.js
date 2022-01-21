@@ -25,7 +25,7 @@ router.post('/register', async (req, res) => {
         todos: defaultTodos,
       });
 
-      user.save();
+      await user.save();
       req.session.user = user;
       req.session.isAuthenticated = true;
       req.session.save((err) => {
@@ -42,6 +42,7 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const candidate = await UserSchema.findOne({ email });
+
     if (candidate) {
       if (await bcript.compare(password, candidate.password)) {
         req.session.user = candidate;

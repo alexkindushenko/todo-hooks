@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 
+import { updateItem, deleteItem } from '../helpers/todo-service';
 import TodoContext from '../helpers/todo-context';
 import TodoItem from './todo-item';
 
@@ -11,12 +12,24 @@ const TodoList = () => {
         {state.visibleTodos.map((el) => (
           <TodoItem
             label={el.label}
-            key={el.id}
+            key={el._id}
             done={el.done}
             inProgres={el.inProgres}
-            onDone={() => dispatch({ type: 'onDone', payload: el.id })}
-            onInProgres={() => dispatch({ type: 'onInProgres', payload: el.id })}
-            onDelete={() => dispatch({ type: 'onDelete', payload: el.id })}
+            onDone={() =>
+              updateItem(el._id, { done: true }).then(({ status }) =>
+                status === 200 ? dispatch({ type: 'onDone', payload: el._id }) : null
+              )
+            }
+            onInProgres={() =>
+              updateItem(el._id, { inProgres: true }).then(({ status }) =>
+                status === 200 ? dispatch({ type: 'onInProgres', payload: el._id }) : null
+              )
+            }
+            onDelete={() =>
+              deleteItem(el._id).then(({ status }) =>
+                status === 200 ? dispatch({ type: 'onDelete', payload: el._id }) : null
+              )
+            }
           />
         ))}
       </ul>

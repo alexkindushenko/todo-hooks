@@ -6,7 +6,7 @@ const config = require('config');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-// const UserSchema = require('./models/user');
+const UserSchema = require('./models/user');
 
 const app = express();
 
@@ -15,7 +15,7 @@ const store = new MongoStore({
   collection: 'sessions',
   uri: MONGO_URI,
 });
-
+app.use(cors());
 app.use(
   session({
     secret: 'secret key11',
@@ -24,11 +24,21 @@ app.use(
     store,
   })
 );
-app.use(cors());
+
 app.use(cookieParser());
 app.use(express.json());
+app.use((req, res, next) => {
+  console.log(req.body);
+  next();
+});
 
-//for dev
+app.use(async (req, res, next) => {
+  req.session.user = await UserSchema.findById('61e97df47c4e55c7563e16b3');
+  req.session.isAuthenticated = true;
+  next();
+});
+
+// for dev
 app.get('*', (req, res) => {
   if (!req.session.isAuthenticated) {
     res.json({ isAuth: false });
