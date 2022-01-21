@@ -2,6 +2,21 @@ import { onSearch, onFilter, addTodo, onDone, onInProgres, onDelete, fetchTodos 
 
 function reducer(state, action) {
   switch (action.type) {
+    case 'onLogout':
+      return {
+        ...state,
+        isAuth: false,
+      };
+    case 'onRegister':
+      return {
+        ...state,
+        isAuth: false,
+      };
+    case 'onLogin':
+      return {
+        ...state,
+        isAuth: true,
+      };
     case 'fetchTodosError':
       return {
         ...state,

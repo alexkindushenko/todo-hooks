@@ -27,7 +27,7 @@ const TodoList = () => {
             }
             onDelete={() =>
               deleteItem(el._id).then(({ status }) =>
-                status === 200 ? dispatch({ type: 'onDelete', payload: el._id }) : null
+                status === 204 ? dispatch({ type: 'onDelete', payload: el._id }) : null
               )
             }
           />

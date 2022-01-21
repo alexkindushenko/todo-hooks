@@ -2,10 +2,12 @@ const { Router } = require('express');
 const bcript = require('bcryptjs');
 
 const UserSchema = require('../models/user');
+const isValid = require('../midlevare/isValid');
+const isAuth = require('../midlevare/isAuth');
 
 const router = Router();
 
-router.post('/register', async (req, res) => {
+router.post('/register', isValid, async (req, res) => {
   const { email, password } = req.body;
   const defaultTodos = [
     { label: 'drink coffee' },
@@ -38,7 +40,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', isValid, async (req, res) => {
   try {
     const { email, password } = req.body;
     const candidate = await UserSchema.findOne({ email });
@@ -61,5 +63,11 @@ router.post('/login', async (req, res) => {
     console.log(error);
     res.status(500).json({ message: 'Server error!' });
   }
+});
+
+router.patch('/', isAuth, (req, res) => {
+  req.session.destroy((err) => {
+    err ? res.status(500).json({ message: 'Server error!' }) : res.clearCookie('connect.sid').end();
+  });
 });
 module.exports = router;

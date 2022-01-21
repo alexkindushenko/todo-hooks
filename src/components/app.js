@@ -13,7 +13,7 @@ const App = () => {
     getTodoList()
       .then(({ data }) => dispatch({ type: 'fetchTodos', payload: data.todos }))
       .catch(() => dispatch({ type: 'fetchTodosError' }));
-  }, []);
+  }, [dispatch]);
   if (isError) return <h2>Error fetching data.</h2>;
   return (
     <div className="todo-app">

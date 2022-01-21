@@ -15,8 +15,8 @@ const AddTodo = () => {
 
   return (
     <form className="add-todo">
-      <input onChange={(e) => setValue(() => e.target.value)} value={value} />
-      <button type="submit" disabled={!value.trim()} onClick={() => onHandleAdd(value)}>
+      <input onChange={(e) => setValue(e.target.value.trim())} value={value} />
+      <button type="submit" disabled={!value} onClick={() => onHandleAdd(value)}>
         Add
       </button>
     </form>

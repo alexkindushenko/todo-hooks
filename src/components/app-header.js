@@ -3,7 +3,6 @@ import TodoContext from '../helpers/todo-context';
 
 const AppHeader = () => {
   const { todos } = useContext(TodoContext).state;
-  console.log(todos);
   const done = todos.filter((el) => (el.done ? el : null)).length;
   if (todos) {
     return (

@@ -63,7 +63,7 @@ router.delete('/:id', async (req, res) => {
     });
     user.todos = newTodos;
     await user.save();
-    res.end();
+    res.status(204).end();
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Server error!' });
