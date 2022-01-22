@@ -20,7 +20,7 @@ const Register = () => {
 
   const onRegister = (email, password, confirmPassword) => {
     if (emailRegexp.test(email)) {
-      if (password >= 6 && password === confirmPassword) {
+      if (password.length >= 6 && password === confirmPassword) {
         sendRegisterForm({ email, password }).then(({ status }) =>
           status === 201 ? dispatch({ type: 'onRegister' }) : setError('E-mail already in use.')
         );
@@ -45,14 +45,16 @@ const Register = () => {
         type="password"
         placeholder="password"
         onChange={(e) => setPassword(() => e.target.value.trim())}
+        value={password}
       />
       <input
         type="password"
         placeholder="confirm password"
         onChange={(e) => setConfirmPassword(() => e.target.value.trim())}
+        value={confirmPassword}
       />
       <button
-        type="submit"
+        type="button"
         disabled={!email || !password || !confirmPassword}
         onClick={() => onRegister(email, password, confirmPassword)}
       >

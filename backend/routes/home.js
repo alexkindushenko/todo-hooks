@@ -1,16 +1,17 @@
-const { Router, response } = require('express');
+const { Router } = require('express');
 const { Types } = require('mongoose');
 
 const UserSchema = require('../models/user');
 
 const router = Router();
 
-router.patch('/', (req, res) => {
+router.patch('/', async (req, res) => {
   if (!req.session.isAuthenticated) {
-    response.status(400);
+    res.status(401).end();
   } else {
+    const candidate = await UserSchema.findOne({ email: req.session.user.email });
     res.json({
-      todos: req.session.user.todos,
+      todos: candidate.todos,
     });
   }
 });

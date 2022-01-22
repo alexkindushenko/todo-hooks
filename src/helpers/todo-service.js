@@ -4,8 +4,11 @@ const _apiBase = 'http://localhost:8888/';
 
 export const getTodoList = async () => {
   try {
-    return await axios.patch(_apiBase);
+    const res = await axios.patch(_apiBase);
+    console.log(res);
+    return res;
   } catch (error) {
+    console.log('todo' + error);
     return error;
   }
 };

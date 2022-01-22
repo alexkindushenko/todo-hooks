@@ -13,12 +13,13 @@ router.post('/register', isValid, async (req, res) => {
     { label: 'drink coffee' },
     { label: 'make awesome app' },
     { label: 'buy new book' },
+    { label: email },
   ];
 
   const candidate = await UserSchema.findOne({ email });
   try {
     if (candidate) {
-      res.status(400).json({ message: 'E-mail already in use.' });
+      res.status(400).end();
     } else {
       const hashPassword = await bcript.hash(password, 10);
       const user = new UserSchema({
@@ -65,7 +66,7 @@ router.post('/login', isValid, async (req, res) => {
   }
 });
 
-router.patch('/', isAuth, (req, res) => {
+router.patch('/logout', isAuth, (req, res) => {
   req.session.destroy((err) => {
     err ? res.status(500).json({ message: 'Server error!' }) : res.clearCookie('connect.sid').end();
   });

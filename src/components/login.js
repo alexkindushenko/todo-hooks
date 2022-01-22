@@ -17,9 +17,9 @@ const Login = () => {
   const emailRegexp =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  const onRegister = (email, password) => {
+  const onLogin = (email, password) => {
     if (emailRegexp.test(email)) {
-      if (password >= 6) {
+      if (password.length >= 6) {
         sendLoginForm({ email, password }).then(({ status }) =>
           status === 200
             ? dispatch({ type: 'onLogin' })
@@ -45,12 +45,9 @@ const Login = () => {
         type="password"
         placeholder="password"
         onChange={(e) => setPassword(() => e.target.value.trim())}
+        value={password}
       />
-      <button
-        type="submit"
-        disabled={!email || !password}
-        onClick={() => onRegister(email, password)}
-      >
+      <button type="button" disabled={!email || !password} onClick={() => onLogin(email, password)}>
         Login
       </button>
     </form>

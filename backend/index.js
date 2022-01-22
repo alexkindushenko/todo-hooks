@@ -7,8 +7,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 
-// const UserSchema = require('./models/user');
-
 const app = express();
 
 const { MONGO_URI, PORT } = config.get('dbConfig');
@@ -28,35 +26,19 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
+// dev
 app.use((req, res, next) => {
-  console.log(req.body);
-  next();
+  setTimeout(() => next(), 1000);
 });
+//-----
 
-// app.use(async (req, res, next) => {
-//   req.session.user = await UserSchema.findById('61e97df47c4e55c7563e16b3');
-//   req.session.isAuthenticated = true;
-//   next();
-// });
-
-// // for dev
-// app.get('*', (req, res) => {
-//   if (!req.session.isAuthenticated) {
-//     res.json({ isAuth: false });
-//   } else {
-//     console.log(req.session);
-//     res.json({
-//       todos: req.session.user.todos,
-//     });
-//   }
-// });
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
-app.use('/auth', require('./routes/auth'));
 app.use('/', require('./routes/home'));
+app.use('/auth', require('./routes/auth'));
 
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }).then(
   () => {

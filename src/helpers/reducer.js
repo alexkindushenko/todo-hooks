@@ -1,21 +1,35 @@
 import { onSearch, onFilter, addTodo, onDone, onInProgres, onDelete, fetchTodos } from './actions';
 
 function reducer(state, action) {
+  console.log(action.type);
   switch (action.type) {
+    case 'unAuthorized':
+      return {
+        ...state,
+        isLoading: false,
+      };
     case 'onLogout':
       return {
         ...state,
+        todos: [],
+        visibleTodos: [],
         isAuth: false,
       };
     case 'onRegister':
       return {
         ...state,
-        isAuth: false,
+        isAuth: true,
       };
     case 'onLogin':
       return {
         ...state,
         isAuth: true,
+      };
+    case 'fetchTodosRequest':
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
       };
     case 'fetchTodosError':
       return {
@@ -23,13 +37,14 @@ function reducer(state, action) {
         isLoading: false,
         isError: true,
       };
-    case 'fetchTodos':
+    case 'fetchTodosSucces':
       return {
         ...state,
         todos: fetchTodos(action.payload),
         visibleTodos: fetchTodos(action.payload),
         isLoading: false,
         isAuth: true,
+        isError: false,
       };
     case 'onSerarch':
       return {

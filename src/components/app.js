@@ -10,10 +10,15 @@ const App = () => {
   const { isLoading, isAuth, isError } = state;
 
   useEffect(() => {
+    dispatch({ type: 'fetchTodosRequest' });
     getTodoList()
-      .then(({ data }) => dispatch({ type: 'fetchTodos', payload: data.todos }))
+      .then((res) =>
+        res.status === 200
+          ? dispatch({ type: 'fetchTodosSucces', payload: res.data.todos })
+          : dispatch({ type: 'unAuthorized' })
+      )
       .catch(() => dispatch({ type: 'fetchTodosError' }));
-  }, [dispatch]);
+  }, [dispatch, state.isAuth]);
   if (isError) return <h2>Error fetching data.</h2>;
   return (
     <div className="todo-app">
