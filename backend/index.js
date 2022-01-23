@@ -27,9 +27,9 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 // dev
-app.use((req, res, next) => {
-  setTimeout(() => next(), 1000);
-});
+// app.use((req, res, next) => {
+//   setTimeout(() => next(), 1000);
+// });
 //-----
 
 app.use(express.static(path.join(__dirname, 'build')));

@@ -23,6 +23,14 @@
   font-size: 1.5rem;
 }
 
+.app-header button {
+  height: 2.5rem;
+  border-radius: 2.5rem;
+  font-size: 1.4rem;
+  padding: 0 1rem;
+  margin: 0.5rem 0;
+}
+
 ul {
   list-style: none;
 }

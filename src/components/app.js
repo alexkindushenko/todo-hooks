@@ -7,9 +7,10 @@ import { getTodoList } from '../helpers/todo-service';
 
 const App = () => {
   const { state, dispatch } = useContext(TodoContext);
-  const { isLoading, isAuth, isError } = state;
+  const { isLoading, isAuth, isError, todos } = state;
 
   useEffect(() => {
+    if (todos.length) return;
     dispatch({ type: 'fetchTodosRequest' });
     getTodoList()
       .then((res) =>
@@ -18,7 +19,7 @@ const App = () => {
           : dispatch({ type: 'unAuthorized' })
       )
       .catch(() => dispatch({ type: 'fetchTodosError' }));
-  }, [dispatch, state.isAuth]);
+  }, [dispatch, todos, isAuth]);
   if (isError) return <h2>Error fetching data.</h2>;
   return (
     <div className="todo-app">

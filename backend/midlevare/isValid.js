@@ -6,7 +6,6 @@ module.exports = (req, res, next) => {
   if (!emailRegexp.test(email) || password.length < 6) {
     return res.status(400).end();
   } else {
-    console.log(password);
     next();
   }
 };

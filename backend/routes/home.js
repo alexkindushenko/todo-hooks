@@ -2,21 +2,17 @@ const { Router } = require('express');
 const { Types } = require('mongoose');
 
 const UserSchema = require('../models/user');
-
+const isAuth = require('../midlevare/isAuth');
 const router = Router();
 
-router.patch('/', async (req, res) => {
-  if (!req.session.isAuthenticated) {
-    res.status(401).end();
-  } else {
-    const candidate = await UserSchema.findOne({ email: req.session.user.email });
-    res.json({
-      todos: candidate.todos,
-    });
-  }
+router.patch('/', isAuth, async (req, res) => {
+  const candidate = await UserSchema.findOne({ email: req.session.user.email });
+  res.json({
+    todos: candidate.todos,
+  });
 });
 
-router.post('/', async (req, res) => {
+router.post('/', isAuth, async (req, res) => {
   console.log(req.body);
   const user = await UserSchema.findById(req.session.user._id);
   const todo = {
@@ -29,7 +25,7 @@ router.post('/', async (req, res) => {
   res.status(201).json({ _id: todo._id, label: todo.label });
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', isAuth, async (req, res) => {
   const { done, inProgres } = req.body;
   const { id } = req.params;
   let newTodos;
@@ -54,7 +50,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', isAuth, async (req, res) => {
   const { id } = req.params;
   try {
     const user = await UserSchema.findById(req.session.user._id);

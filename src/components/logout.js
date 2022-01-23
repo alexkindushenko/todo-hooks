@@ -7,9 +7,12 @@ const Logout = () => {
   const { dispatch } = useContext(TodoContext);
 
   return (
-    <p className="logout" onClick={() => userLogout().then(() => dispatch({ type: 'onLogout' }))}>
+    <button
+      className="logout"
+      onClick={() => userLogout().then(() => dispatch({ type: 'onLogout' }))}
+    >
       Logout
-    </p>
+    </button>
   );
 };
 
