@@ -47,21 +47,14 @@ function reducer(state, action) {
         isError: false,
       };
     case 'onSerarch':
-      return {
-        ...state,
-        visibleTodos: onSearch(state, action.payload),
-      };
+      return onSearch(state, action.payload);
+
     case 'onFilter':
-      return {
-        ...state,
-        visibleTodos: onFilter(state, action.payload),
-      };
+      return onFilter(state, action.payload);
+
     case 'addTodo':
-      return {
-        ...state,
-        todos: addTodo(state, action.payload),
-        visibleTodos: addTodo(state, action.payload),
-      };
+      return addTodo(state, action.payload);
+
     case 'onDone':
       return {
         ...state,

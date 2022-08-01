@@ -2,14 +2,18 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
-const config = require('config');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 
+require('dotenv').config();
+
 const app = express();
 
-const { MONGO_URI, PORT } = config.get('dbConfig');
+const PORT = process.env.PORT || 8888,
+  MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/todoDB',
+  SESS_KEY = process.env.SESS_KEY || 'ukhjkyuiry7uypuigghfgfu';
+
 const store = new MongoStore({
   collection: 'sessions',
   uri: MONGO_URI,
@@ -17,7 +21,7 @@ const store = new MongoStore({
 app.use(cors());
 app.use(
   session({
-    secret: 'secret key11',
+    secret: SESS_KEY,
     resave: false,
     saveUninitialized: false,
     store,
@@ -26,11 +30,6 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
-// dev
-// app.use((req, res, next) => {
-//   setTimeout(() => next(), 1000);
-// });
-//-----
 
 app.use(express.static(path.join(__dirname, 'build')));
 

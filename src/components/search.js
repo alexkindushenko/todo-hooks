@@ -3,15 +3,28 @@ import React, { useContext } from 'react';
 import TodoContext from '../helpers/todo-context';
 
 const Search = () => {
-  const { dispatch } = useContext(TodoContext);
+  const {
+    state: { filterButtons },
+    dispatch,
+  } = useContext(TodoContext);
+
+  const handleButtonFilter = (label) => {
+    dispatch({ type: 'onFilter', payload: label });
+  };
 
   return (
     <div className="search">
       <input onChange={(e) => dispatch({ type: 'onSerarch', payload: e.target.value })} />
       <div>
-        <button onClick={() => dispatch({ type: 'onFilter', payload: 'all' })}>ALL</button>
-        <button onClick={() => dispatch({ type: 'onFilter', payload: 'inp' })}>INP</button>
-        <button onClick={() => dispatch({ type: 'onFilter', payload: 'end' })}>END</button>
+        {filterButtons.map((el) => (
+          <button
+            className={el.active ? 'active' : ''}
+            key={el.label}
+            onClick={() => handleButtonFilter(el.label)}
+          >
+            {el.label}
+          </button>
+        ))}
       </div>
     </div>
   );

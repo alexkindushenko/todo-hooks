@@ -1,6 +1,0 @@
-{
-  "dbConfig": {
-    "MONGO_URI": "mongodb://localhost:27017/tododb",
-    "PORT": 8888
-  }
-}
